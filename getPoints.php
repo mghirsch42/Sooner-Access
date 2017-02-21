@@ -1,5 +1,7 @@
 <?php
 
+// This file grabs data from the data base to send to the javascript
+
 $con = new mysqli('localhost', 'root', 'secret', 'campus');
 if($con->connect_error) {
   die('Connection Error');
