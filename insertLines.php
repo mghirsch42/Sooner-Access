@@ -7,14 +7,20 @@ if($con->connect_error) {
 	 die('Error : ('. $con->connect_errno .') '. $con->connect_error);
 }
 
-$mapInfo = simplexml_load_file('mapFile.kml');
+
+$delete = "DELETE FROM polylines WHERE 1";
+if($con->query($delete)) {
+    echo "deleted before inserting";
+}
+
+$mapInfo = simplexml_load_file('newMapFile.kml');
 
 
 foreach ($mapInfo->Document->Folder->Placemark as $plm) {
 
 	$placemark = $plm->name;
 	$name = (string)$placemark;
-	echo $name;
+	echo $name . "<br>";
 
 	$placemark = $plm->description;
 	$access = (string)$placemark;
@@ -26,57 +32,41 @@ foreach ($mapInfo->Document->Folder->Placemark as $plm) {
 	if($plm->LineString) {
 
 		$placemark = $plm->LineString->coordinates;
-		$coords = preg_split("/[,\s]+/",(string)$placemark);
+		$coords = preg_split("/[,\s\n]+/",(string)$placemark);
 
-			for($i = 0; $i<count($coords)-5; $i=$i+3) {
-				echo $i . "</br>";
-
+        
+			for($i = 1; $i<count($coords)-5; $i=$i+3) {
+				echo "i: " + $i . "</br>";
+        
+                
 				$j = $i+1;
 				$k = $i+3;
 				$l = $i+4;
-				$m = $i+5;
 
-				echo "lng0: " . $coords[$i] . "<br>";
-				echo "lat0: " . $coords[$i+1] . "<br>";
-				echo "lng1: " . $coords[$i+3] . "<br>";
-				echo "lat1: " . $coords[$i+4] . "<br>";
+				echo "lng0: " . round($coords[$i], 5) . "<br>";
+				echo "lat0: " . round($coords[$j], 5) . "<br>";
+				echo "lng1: " . round($coords[$k], 5) . "<br>";
+				echo "lat1: " . round($coords[$l], 5) . "<br>";
 				echo "Accessibility: " . $acs . "<br>";
 				echo "<br>";
 
-				$sql = "INSERT INTO polylines (name, lat0, lng0, lat1, lng1, Accessibility)
-					VALUES ('$name', '$coords[$i]', '$coords[$j]', '$coords[$k]', '$coords[$l]', '$acs')";
-		} else if($plm->Point) {
-			$placemark = $plm->name;
-			$name = (string)$placemark;
+                
+                $sql = "INSERT INTO polylines (name, lat0, lng0, lat1, lng1, accessibility)
+                VALUES('$name', '$coords[$i]', '$coords[$j]', '$coords[$k]', '$coords[$l]', '$acs')";
+            }
 
-			$placemark = $plm->description;
-			$acs = (string)$placemark;
-
-			$placemark = $plm->Point->coordinates;
-			$coords = preg_split("/[,\s]+/",(string)$placemark);
-
-			$i = 0;
-			$j = 1;
-			$sql = "INSERT INTO points (name, lat, lng, accessibility)
-								VALUES('$name', '$coords[$i]', '$coords[$j]', '$acs')";
-		}
-
-		echo $sql;
-		echo "<br>";
-
-		if($con->query($sql) === TRUE) {
-			echo "sucess!";
-		}
-		else {
-			echo "death";
-		}
-
-		echo "<br>";
+		
 	}
 
-
-
-
+    if($con->query($sql) === TRUE) {
+        echo "sucess!";
+    }
+    else {
+	   echo "death";
+    }
+    
+    echo "<br><br> -------------------------- <br><br>";
+    
 }
 
 ?>

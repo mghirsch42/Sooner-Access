@@ -5,7 +5,7 @@ if($con->connect_error) {
   die('Connection Error');
 }
 // choose all the data and load into result
-$sql="SELECT * FROM points";
+$sql="SELECT * FROM polylines";
 $result = $con->query($sql);
 
 

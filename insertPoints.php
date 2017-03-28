@@ -12,24 +12,28 @@ $mapInfo = simplexml_load_file('mapFile.kml');
 
 foreach ($mapInfo->Document->Folder->Placemark as $plm) {
 
-	$placemark = $plm->name;
-	$name = (string)$placemark;
-	echo $name;
+    if($plm->Point) {
+        $placemark = $plm->name;
+        $name = (string)$placemark;
+        echo $name;
+        echo "<br>";
 
-	$placemark = $plm->description;
-	$access = (string)$placemark;
+        $placemark = $plm->description;
+        $access = (string)$placemark;
 
-  $placemark = $plm->name;
-  $name = (string)$placemark;
+        $placemark = $plm->Point->coordinates;
+        $coords = preg_split("/[,\s]+/",(string)$placemark);
 
-  $placemark = $plm->description;
-  $acs = (string)$placemark;
-
-  $placemark = $plm->Point->coordinates;
-  $coords = preg_split("/[,\s]+/",(string)$placemark);
-
-  $i = 0;
-  $j = 1;
-  $sql = "INSERT INTO points (name, lat, lng, accessibility)
-            VALUES('$name', '$coords[$i]', '$coords[$j]', '$acs')";
+        $i = 0;
+        $j = 1;
+        $sql = "INSERT INTO points (name, lat, lng, accessibility)
+                VALUES('$name', '$coords[$i]', '$coords[$j]', '$access')";
+        
+        if($con->query($sql) === TRUE) {
+			echo "sucess!";
+		}
+		else {
+			echo "death";
+		}
+    }
 }

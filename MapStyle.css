@@ -1,0 +1,128 @@
+html 
+{
+    position: relative;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    padding-left: 15px;
+    padding-right: 15px;
+
+    /*Background pattern from Subtle Patterns (https://www.toptal.com/designers/subtlepatterns)*/
+    background-image: url("ecailles.png");
+}
+
+.page-header 
+{
+    padding-left: 1%;
+    color:firebrick;
+    font-family: "Book Antiqua";
+    font-weight: bold;
+}
+
+#nav-bar-stuff
+{
+   padding-left: 30px;
+   padding-right: 20px;
+   padding-top: 5px;
+}
+
+#middle
+{
+    min-height: 85vh;
+}
+
+#main-contents
+{
+    /*min-height: 80vh;*/
+}
+
+.content > p > a
+{
+    color: #3277b3;
+}
+
+#map {
+    /*height: 575px;*/
+    height: 90vh;
+}
+
+#content
+{
+    /*min-height: 525px;*/
+    /*min-height: 80vh;*/
+    padding-bottom: 20px;
+    padding-top: 5px;
+    padding-right: 30px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 10%;
+}
+
+footer {
+    background-color: #2d6a9f;
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 120px;
+    width: 100%;
+    overflow:hidden;
+}
+
+.footer-column
+{  
+    width:350px;
+    min-width: 120px;
+    max-width: 50%;
+    float: left;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    height: 60px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-words
+{
+    color:#c3daee;
+}
+
+.footer-words > a
+{
+    color:#c3daee;
+    text-decoration: none;
+}
+
+.footer-words > a:hover
+{
+    text-decoration: underline;
+}
+
+#staff-emails
+{
+    border-width: 2px;
+}
+
+#background-info
+{
+    color: black;
+}
+
+#heyThere
+{
+    text-decoration: none;
+}
+
+#heyThere:hover
+{
+    text-decoration: underline;
+}
+h3 {
+    font-family: "Book Antiqua";
+}
